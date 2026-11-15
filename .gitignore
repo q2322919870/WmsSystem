@@ -1,0 +1,13 @@
+# .NET 编译输出
+[Bb]in/
+[Oo]bj/
+
+# Rider / JetBrains IDE
+.idea/
+*.sln.iml
+*.user
+*.suo
+
+# 其他常见忽略
+*.log
+.DS_Store
