@@ -6,6 +6,21 @@ public class OutboundOrderDetail
 {
     protected OutboundOrderDetail(){}
 
+    private OutboundOrderDetail(int materialId, int requiredQty)
+    {
+        if (materialId<=0)
+            throw new BusinessException("物料ID必须大于0");
+        if (requiredQty <= 0)
+            throw new BusinessException("需求数量必须大于0");
+        MaterialId = materialId;
+        RequiredQty = requiredQty;
+        AllocatedQty = 0;
+        PickedQty = 0;
+        Status = "待分配";
+    }
+
+    public static OutboundOrderDetail Create(int materialId, int requiredQty)
+        => new OutboundOrderDetail(materialId, requiredQty);
     public int Id { get; private set; }
     public int OrderId { get; private set; }
     public int MaterialId { get; private set; }
@@ -36,6 +51,7 @@ public class OutboundOrderDetail
 
     public void Pick(int pickedQty)
     {
+        
         if(pickedQty <= 0)
             throw new BusinessException("拣货数量必须大于0");
         if(pickedQty != AllocatedQty)

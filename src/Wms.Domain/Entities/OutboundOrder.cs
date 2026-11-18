@@ -62,8 +62,8 @@ public class OutboundOrder
     // 核心业务动作：拣货确认
     public void PickDetail(int detailId, int pickedQty)
     {
-        if (Status is not "待分配")
-            throw new BusinessException("只有在待分配状态的出库单才能拣货");
+        if (Status is not "已分配")
+            throw new BusinessException("只有在已分配状态的出库单才能拣货");
         var detail = _details.FirstOrDefault(d => d.Id == detailId && !d.IsDeleted)
                      ?? throw new BusinessException($"订单明细{detailId}不存在");
         detail.Pick(pickedQty);

@@ -54,6 +54,7 @@ public class Inventory
         if (qty > AvailableQty)
             throw new BusinessException($"可用库存不足，当前可用{AvailableQty}，需要{qty}");
         Qty -= qty;
+        LockedQty -= qty;
     }
 
     public void Lock(int qty)

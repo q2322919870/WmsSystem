@@ -254,6 +254,95 @@ namespace Wms.Infrastructure.Migrations
                     b.ToTable("Wms_Material", (string)null);
                 });
 
+            modelBuilder.Entity("Wms.Domain.Entities.OutboundOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OrderNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("RequireTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderNo")
+                        .IsUnique();
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("Wms_OutboundOrder", (string)null);
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.OutboundOrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AllocatedQty")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PickedQty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredQty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Wms_OutboundOrderDetail", (string)null);
+                });
+
             modelBuilder.Entity("Wms.Domain.Entities.StorageArea", b =>
                 {
                     b.Property<int>("Id")
@@ -468,6 +557,43 @@ namespace Wms.Infrastructure.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("Wms.Domain.Entities.OutboundOrder", b =>
+                {
+                    b.HasOne("Wms.Domain.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.OutboundOrderDetail", b =>
+                {
+                    b.HasOne("Wms.Domain.Entities.StorageLocation", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Wms.Domain.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Wms.Domain.Entities.OutboundOrder", "Order")
+                        .WithMany("Details")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Wms.Domain.Entities.StorageArea", b =>
                 {
                     b.HasOne("Wms.Domain.Entities.Warehouse", "Warehouse")
@@ -491,6 +617,11 @@ namespace Wms.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Wms.Domain.Entities.InboundOrder", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.OutboundOrder", b =>
                 {
                     b.Navigation("Details");
                 });

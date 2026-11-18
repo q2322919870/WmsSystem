@@ -4,12 +4,12 @@ public class OutboundOrderDto
 {
     public int Id { get; set; }
     public string OrderNo { get; set; } = string.Empty;
-    public int WarehousId { get; set; }
+    public int WarehouseId { get; set; }
     public string WarehouseName { get; set; } = string.Empty;
     public string CustomerName { get; set; } = string.Empty;
     public DateTime RequiredTime { get; set; }
     public string Status { get; set; } = string.Empty;
-    public List<OutboundOrderDetailDto> Type { get; set; }
+    public List<OutboundOrderDetailDto> Details { get; set; } = new();
 }
 
 public class OutboundOrderDetailDto

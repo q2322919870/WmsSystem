@@ -9,7 +9,7 @@ public class CreateOutboundOrderDto
     public string CustomerName { get; set; } = string.Empty;
     public DateTime RequireTime { get; set; }
 
-    public List<CreateOutboundOrderDetailDto> OutboundOrderDetails { get; set; } = new();
+    public List<CreateOutboundOrderDetailDto> Details { get; set; } = new();
     
 }
 

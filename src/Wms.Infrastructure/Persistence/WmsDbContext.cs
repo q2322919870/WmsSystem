@@ -16,6 +16,8 @@ public class WmsDbContext:DbContext
     public DbSet<InboundOrderDetail> InboundOrderDetails => Set<InboundOrderDetail>();
     public DbSet<Inventory> Inventories => Set<Inventory>();
     public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
+    public DbSet<OutboundOrder> OutboundOrders => Set<OutboundOrder>();
+    public DbSet<OutboundOrderDetail> OutboundOrderDetails => Set<OutboundOrderDetail>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

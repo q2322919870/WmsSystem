@@ -2,7 +2,7 @@
 
 public class AllocateOutboundDto
 {
-    public int Id { get; set; }
+    public int DetailId { get; set; }
     public int LocationId { get; set; }
     public int AllocatedQty { get; set; }
 }

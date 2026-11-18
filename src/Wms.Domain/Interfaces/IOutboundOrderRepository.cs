@@ -2,7 +2,7 @@
 
 namespace Wms.Domain.Interfaces;
 
-public interface IIOutboundOrderRepository
+public interface IOutboundOrderRepository
 {
     Task AddAsync(OutboundOrder order);
     Task<bool> ExistsByOrderNoAsync(string orderNo);

@@ -13,6 +13,8 @@ builder.Services.AddScoped<IStorageLocationRepository, StorageLocationRepository
 builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
 builder.Services.AddScoped<IInboundOrderRepository, InboundOrderRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<IOutboundOrderRepository, OutboundOrderRepository>();
+builder.Services.AddScoped<OutboundOrderService>();
 builder.Services.AddScoped<InventoryService>();
 builder.Services.AddScoped<InboundOrderService>();
 builder.Services.AddScoped<MaterialService>();
