@@ -38,7 +38,7 @@ public class StorageLocationRepository:IStorageLocationRepository
             .ToListAsync();
     }
 
-    public async Task<StorageLocation?> GetByIdwithAreaAsync(int id)
+    public async Task<StorageLocation?> GetByIdWithAreaAsync(int id)
     {
         return await _context.StorageLocations.Include(l=>l.StorageArea)
             .AsNoTracking()

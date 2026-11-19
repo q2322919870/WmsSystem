@@ -343,6 +343,88 @@ namespace Wms.Infrastructure.Migrations
                     b.ToTable("Wms_OutboundOrderDetail", (string)null);
                 });
 
+            modelBuilder.Entity("Wms.Domain.Entities.StocktakeOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OperatorName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("OrderNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("WarehousId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderNo")
+                        .IsUnique();
+
+                    b.HasIndex("WarehousId");
+
+                    b.ToTable("Wms_StocktakeOrder", (string)null);
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.StocktakeOrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActualQty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DifferenceQty")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SystemQty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Wms_StocktakeOrderDetail", (string)null);
+                });
+
             modelBuilder.Entity("Wms.Domain.Entities.StorageArea", b =>
                 {
                     b.Property<int>("Id")
@@ -594,6 +676,44 @@ namespace Wms.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("Wms.Domain.Entities.StocktakeOrder", b =>
+                {
+                    b.HasOne("Wms.Domain.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehousId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.StocktakeOrderDetail", b =>
+                {
+                    b.HasOne("Wms.Domain.Entities.StorageLocation", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Wms.Domain.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Wms.Domain.Entities.StocktakeOrder", "Order")
+                        .WithMany("Details")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Wms.Domain.Entities.StorageArea", b =>
                 {
                     b.HasOne("Wms.Domain.Entities.Warehouse", "Warehouse")
@@ -622,6 +742,11 @@ namespace Wms.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Wms.Domain.Entities.OutboundOrder", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Wms.Domain.Entities.StocktakeOrder", b =>
                 {
                     b.Navigation("Details");
                 });

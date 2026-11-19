@@ -52,7 +52,7 @@ public class InboundOrderService
         var order = await _repository.GetByIdForReceivingAsync(orderId)
                     ?? throw new BusinessException($"入库单ID{orderId}不存在");
         // 2. 校验库位存在，且属于入库单指定的仓库
-        var location = await _locationRepository.GetByIdwithAreaAsync(dto.LocationId)
+        var location = await _locationRepository.GetByIdWithAreaAsync(dto.LocationId)
             ?? throw new BusinessException($"库位ID{dto.LocationId}不存在");
         if (location.StorageArea.WarehouseId != order.WarehouseId)
             throw new BusinessException($"库位{location.Code}不属于入库单{order.OrderNo}指定的仓库，不能上架");

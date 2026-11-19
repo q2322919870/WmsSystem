@@ -50,7 +50,7 @@ public class OutboundOrderService
     {
         var order = await _repository.GetByIdForAllocationAsync(orderId)
                     ?? throw new BusinessException($"出库单 {orderId} 不存在");
-        var location = await _locationRepository.GetByIdwithAreaAsync(dto.LocationId)
+        var location = await _locationRepository.GetByIdWithAreaAsync(dto.LocationId)
             ?? throw new BusinessException($"库位 {dto.LocationId} 不存在");
         if (order.WarehouseId != location.StorageArea.WarehouseId)
             throw new BusinessException($"库位 {location.Code} 不属于出库单指定的仓库");

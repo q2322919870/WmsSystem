@@ -73,4 +73,13 @@ public class Inventory
             throw new BusinessException($"解锁数量 {qty} 不能大于锁定数量 {LockedQty}");
         LockedQty -= qty;
     }
+
+    // 盘点调整：直接设置为目标数量
+    public void Adjust(int targetQty)
+    {
+        if(targetQty < 0)
+            throw new BusinessException("调整后库存不能为负");
+        Qty = targetQty;
+        LockedQty = 0;// 盘点时通常要求无锁定，或者强制解锁
+    }
 }

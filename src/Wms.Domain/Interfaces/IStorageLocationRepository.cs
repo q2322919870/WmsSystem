@@ -8,6 +8,6 @@ public interface IStorageLocationRepository
     Task<bool> ExistsByCodeInAreaAsync(int storageAreaId, string code);
     Task<List<StorageLocation>> GetAllAsync();
     Task<List<StorageLocation>> GetByAreaIdAsync(int storageAreaId);
-    Task<StorageLocation?> GetByIdwithAreaAsync(int id);
+    Task<StorageLocation?> GetByIdWithAreaAsync(int id);
     Task SaveChangesAsync();
 }
